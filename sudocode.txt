@@ -1,0 +1,71 @@
+world = 16 * 16
+canvasSize = 32 * 64
+values = range(255 * 255 * 255) // not very plesant with ery color schemes. The final
+(a alternative would be that, the rgb values represent three diffrent values, and alpha is age)
+
+inventory = canvasSize
+
+version 1.0 : TURN_BASED ; FAST_PACED
+input seed: coming soon
+
+
+position should only interact with said position in said way, minimalistic
+
+for example:
++----+
+|.;:2|
+|,dco|
++----+
+consider .
+
+what is taken in to account is the position of rule .
+the rule at the position = .
+the rule of position (choosen between turns) xy for d
+the rule of the position = d (100 in ascii)
+
+rule range
+read / write
+
+read from node .
+perform value write
+for starters one input rule and one output rule
+then scale so multiple rule-nodes can be used for input and out put
+
+for example like a fragment grenade can blow up on one node and place fragments further away.
+
+so it costs energy to move at a faster speed. But only the relative postions and speeds should be considered.
+in conclusion, nodes at a postion requires more cost to interact with the rule.
+question is can every own a rule, act a certain way with all other rules.
+
+so the task is to generate a system that balance it self
+and then maybe canvases fight each other or form a clan idfk. online or AI, swarm's of Canvases, but each with limited space.
+So Distance matters, obviously.
+the cost of the rules which is deemed the fairest by the system.
+so the cheepest starting seed will set the standard for the rest of the system
+either by opinion
+
+so a canvas is valued at
+# of starting node with the intensity of the total value
+how far apart the are, the entire canvas density.
+
+
+
+you can create a gravity field around a certain node perhaps.
+something like
+.
+|
++---d
+
+cost 2 down and 4 right (2^2 + 4^2)^.5 = 4.472
+
+rule is 
+if . is 
+
+custom starting terrain, of course
+
+so you set your rules then you get other rules from other canvases. maybe and se if you can survive the other one's rules
+and who ever survive get's a new rule node. until you filled out your canvas and it becomes bigger (singleplayer primarly).
+
+then either you win or you get a new sized canvas, (or in online your just the master until someone defeats you).
+colide the two canvases like floating landscapes then battle.
+and you get to name your canvas setups iguess. Done!
