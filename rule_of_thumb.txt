@@ -1,0 +1,66 @@
+like a cannon that shots 
+
+left -> cannon
+
+down 5
+
+and is then destroy or losing durability
+
+cannon8 is 8
+
+cannon7 is 7
+
+cannon6 is cannon 8
+
+.......
+
+
+attacker is 2
+
+###
+three things 
+position
+
+the node that is drawn to screen holds the ruler's position
+R: position 16 * 16, the relative position to interact with
+G: tag (name)
+B: ruleBase (how tags interact with each other, for example: +3 for R(position), and -3 for self.health)
+A: age, healh, Value if 0
+
+the rules are subtract n from the node that the ruler sits on and apply the same amount to the target, but sending cross channels [(R to B for examples) is equally cheap as R to R)]
+
+###
+the color is drawn and the
+R = 3,5
+G = Cleric
+B = ruleSet.healing + ruleSet.standing
+A = [heal target by one, lose tag by one][give 0 for R, take 0 from R] 
+
+0: your position [expand...]
+1: other position [expand...]
+
+2: your action [expand...]
+3: other action [expand...]
+
+3: your durability [expand...]
+
+###
+make it intressting and don't cap and over/under flow the tag/position values.
+either cap
+
+then maybe
+
+The drawnPosition
+R = 1,1
+G = SitUps
+B = target (0, 0)
+
+
+
+0: your position [expand...]
+1: other position [expand...]
+
+2: your action [expand...]
+3: other action [expand...]
+
+3: your durability [expand...]
