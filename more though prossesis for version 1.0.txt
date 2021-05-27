@@ -1,0 +1,37 @@
+like a cannon that shots 
+
+left -> cannon
+
+down 5
+
+and is then destroy or losing durability
+
+cannon8 is 8
+
+cannon7 is 7
+
+cannon6 is cannon 8
+
+.......
+
+
+attacker is 2
+
+###
+three things 
+position
+
+the node that is drawn to screen
+R: position 16 * 16
+G: tag (name)
+B: ruleBase (how tags interact with each other, for example: +3 for R(position), and -3 for self.health)
+A: age, healh, Value if 0
+
+the rules are subtract n from the node that the ruler sits on and apply the same amount to the target, but sending cross channels [(R to B for examples) is equally cheap as R to R)]
+
+###
+R = 3,5
+G = Cleric
+B = Enum.Healing
+A = [heal target by one, 
+
