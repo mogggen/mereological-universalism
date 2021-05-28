@@ -1,0 +1,30 @@
+(position)
+R = target position (1)
+G = player
+B = moveRight
+A = 200
+
+(posiion)
+R = target position(0)
+G = MoveDown
+B = clockWiseRotator
+A = 100
+
+(position)
+R = target position
+G = Item
+B = chop tree
+(chop tree counter: dead)
+A = 4 (the chop tree action can be performed 4 times)
+
+(position)
+R = target position (-1)
+G = Oak
+B = hit
+A = 40
+
+(postion)
+R = target position (0)
+G = SandStone
+B = EmptyTerrain
+A = 0
