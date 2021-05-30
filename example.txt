@@ -1,3 +1,10 @@
+template
+(position)
+R = relative targeting position (can have multiple)
+G = entity Type
+B = action/reaction
+A = durabilty (wait with this one until the other aspects are functional)
+
 (position)
 R = target position (1)
 G = player
