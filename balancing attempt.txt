@@ -1,0 +1,17 @@
+like with blueprint from from the unreal engine series their will be a limited set of nodes where they cost diffrent to use:
+and contains the instrucion for each canvas,
+and putting more nodes into your code makes it more cost some
+you can pack nodes into function that will cost the total of the functions nodes - the call and return nodes
+and the node cost puts each canvas into diffrent tiers depending on how many nodes your code uses.
+
+the nodes:
+
+move (right, left, up, down)
+
+increment/decrement [r, g, b, a] at [location]
+
+if not zero
+elif
+
+call function
+return [None, r, g, b, a, location]
