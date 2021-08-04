@@ -1,19 +1,20 @@
 from random import randint, choice
-bfVocabulary = "+-><[].,"
+bfVocabulary = "+-><"#[].,"
 
 mapSize = 8
+distance = 5  # less than map size
 
 actorMap = {}
 
 
-def generate_script_slots(distance):
+def generate_script_slots(dist):
 	ss = {}
-	length = (0 + distance) * distance // 2
-	for script in range(length): # get each individual length key to distance
+	length = (0 + dist) * dist // 2
+	for script in range(0, length):  # get each individual length key to distance
 		ss[script] = ""
 		for command in range(script):
 			ss[command] += choice(bfVocabulary)
-	print(ss)
+	print(F"Generated {dist} scripts with a total of {length} commands")
 	return ss
 
 
@@ -21,7 +22,7 @@ def generate_script_slots(distance):
 pass
 
 
-script_slots = generate_script_slots(distance=40)
+script_slots = generate_script_slots(dist=distance)
 
 
 # generate map slots
@@ -39,11 +40,11 @@ def bf_compile(plain_text):
 
 
 # a text to code function
-def bf_interperator(bf_script_with_comments, Max_Iterator=2048):
+def bf_interperator(bf_script_with_comments, Max_Iterator=2**64):
 	commandsForever = 0
 	ACTOR_VARIABLE = "Holy grail"
 	
-	scopeStackIndex = 0
+	scopeStack = []
 	
 	script_pointer = 0  # where in the bf code the main-thread is executing (code line:char)
 	actor_pointer = 0  # where on the ActorMap the script is being executed on (buffer caret)
@@ -79,8 +80,8 @@ def bf_interperator(bf_script_with_comments, Max_Iterator=2048):
 		script_pointer += 1
 		
 		if commandsForever >= Max_Iterator:
-			raise F"Runtime Error: number of consecutive commands of {commandsForever}, may contain an infinite loop. scope-depth: {len(scopeStack)}"
-		
+			raise F"Runtime Error: number of consecutive commands of {commandsForever}, scope-depth: {len(scopeStack)}"
+	
 	# check for Error
 	if scopeStack: raise F"Syntax Error: expected ']', got {actor_pointer}"
 	
@@ -91,8 +92,8 @@ generation = 0
 # run game
 def step_simulation():
 	global generation
+	print("step simulation:", generation, end="")
 	generation += 1
-	print(generation)
 	
 	# prepare to transition to the next generation of the ActorMap
 	previous_actorMap = actorMap
@@ -100,9 +101,29 @@ def step_simulation():
 		bf_compile(script_slots[previous_actorMap[_]])
 
 
-step_simulation()
-
-
 # play game
 def run_simulation():
 	step_simulation()
+
+
+def display_board(num_of_col):
+	for i in actorMap:
+		
+		# formatting
+		if i == 0:
+			print(end='\t')
+		if i % num_of_col == 0:
+			print()
+		elif i == 0:
+			continue
+		
+		# print script holding of actor
+		print(actorMap[i], end="", sep="\t")
+	print()
+
+
+# test run
+while True:
+	input()
+	step_simulation()
+	display_board(num_of_col=3)
