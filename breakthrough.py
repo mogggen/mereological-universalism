@@ -94,7 +94,6 @@ def step_simulation():
 	global generation
 	print("step simulation:", generation, end="")
 	generation += 1
-	
 	# prepare to transition to the next generation of the ActorMap
 	previous_actorMap = actorMap
 	for _ in previous_actorMap:
@@ -110,7 +109,7 @@ def display_board(num_of_col):
 	for i in actorMap:
 		
 		# formatting
-		if i == 0:
+		if i != 0:
 			print(end='\t')
 		if i % num_of_col == 0:
 			print()
