@@ -6,3 +6,9 @@ You start by giving instructions giving diffrent pieces on your canvas then when
 And you don't can make them generate better pieces to become superior and complete the game
 
 Make a test version where you compete agains others like starcraft or warcraft
+
+The pieces can change the values of a terrein, kind of like a chemical spontangeous reaction
+
+Diffrent pieces may have diffrent interaction with terrain and remain in certain bimoes that works out favourably
+
+Implent overlord that steer the general direction of the pieces evultion
