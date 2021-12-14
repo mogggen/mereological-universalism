@@ -26,9 +26,10 @@
 * open scope instructions are automatically closed the end of the file
 
 ## Initial arrangment
-* Player swap half their states at random
-* The values of the bytes are randomized for both players
-* The Player that goes second, gets one extra state starting at the board
+1. Each player pick what values will represent what state (between 0-255)
+2. Player swap half their states at random, and place their state in the closest Fit (rounding down)
+3. The values of the bytes are randomized for both players
+4. The Player that goes second, gets one extra state starting at the board
 
 ## Termination
 * If a player has no bytes that represent a state left, they lose
