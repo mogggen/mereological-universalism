@@ -9,11 +9,12 @@
 * ']' - end of scope, return to beginning of newest scope
 
 ## Deviations
-* ',' - reads from the oppnent's carret and writes to the players carret
-* '.' - writes from the player's carret and writes to the oppnents carret
+* '.' - reads the content of the oppnent's carret and writes to the players carret
+* ',' - reads from the player's carret and writes to the oppnents carret
 
 ## Rules
 * Each Player is allowed 32 states
+* Every state has to be unique
 * Each player has a total of 512 steps
 * Each player has 8 bytes, storing a value between 0-255
 * Each one of the player's state has a distinct value assigned to it
