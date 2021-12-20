@@ -17,7 +17,7 @@ Idelogy: merological-universalism (yes I have near to no knowledge of the meanin
 * Each Player is allowed 32 states
 * Every state has to be unique
 * Each player has a total of 512 steps
-* Each player has 8 bytes, storing a value between 0-255
+* Each player has 8 bytes, storing a value between 0-63
 * Each one of the player's state has a distinct value assigned to it
 
 ## Logic
