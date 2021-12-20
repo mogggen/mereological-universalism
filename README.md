@@ -1,4 +1,5 @@
-# The duel of the State-machines
+# Format War
+Idelogy: merological-universalism (yes I have near to no knowledge of the meaning behind this word :D )
 
 ## Instructions
 * '+' - increment Value at carret
