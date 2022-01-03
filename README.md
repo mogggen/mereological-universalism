@@ -31,6 +31,7 @@ Idelogy: merological-universalism (yes I have near to no knowledge of the meanin
 * Make it possible by extra commands, to read buffer index
 * Have a rule be drawn from a pool of random rules, every turn
 * Make other players byte accessable by you carret
+* Have underflows remove bytes, and overflows append them
 
 
 ## Initial arrangment
