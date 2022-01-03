@@ -27,6 +27,12 @@ Idelogy: merological-universalism (yes I have near to no knowledge of the meanin
 * every instruction run on that cost 1 step, including repeats
 * open scope instructions are automatically closed the end of the file
 
+## Varations
+* Make it possible by extra commands, to read buffer index
+* Have a rule be drawn from a pool of random rules, every turn
+* Make other players byte accessable by you carret
+
+
 ## Initial arrangment
 1. Each player pick what values will represent what state (between 0-255)
 2. Player swap half their states at random, and place their state in the closest Fit (rounding down)
