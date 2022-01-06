@@ -32,8 +32,13 @@ Idelogy: merological-universalism (yes I have near to no knowledge of the meanin
 * Have a rule be drawn from a pool of random rules, every turn
 * Make other players byte accessable by you carret
 * Have underflows remove bytes, and overflows append them
-
-
+* formula for max value: number of cells Max Value=4^(2+numCell), stepCap=2^(7+numCell)
+   Example:
+   4 / 128
+   16 16 / 256
+   64 64 64 / 512
+   256 256 256 256 / 1024
+   
 ## Initial arrangment
 1. Each player pick what values will represent what state (between 0-255)
 2. Player swap half their states at random, and place their state in the closest Fit (rounding down)
