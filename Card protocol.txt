@@ -1,0 +1,5 @@
+256*256.png
+2024 byte long code block.json
+... (blocks)
+refrenceid : Integer
+
