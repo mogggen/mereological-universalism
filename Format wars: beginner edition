@@ -1,0 +1,5 @@
+8 bytes per player
+overflows are discarded but counted as a step
+max 50 steps per rule, if you have excess steps after playing a rule, you can continue or end turn.
+if a player gets all their bytes to a value of 255 (overflow is not a thing) they will win the game.
+if a player gets all their bytes to a value of 0 (underflow is not a thing) they will lose the game.
