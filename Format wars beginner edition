@@ -1,7 +1,7 @@
 8 bytes per player
 overflows are discarded but counted as a step
-the bf variation says that [] only exits once a range is reach (Note: it will still stop once the player has run out of step that turn).
-the sum of your card starts at 50, and the player can assign them freely, if you have excess steps after playing a rule, you can continue and play another rule or end turn.
-it will rise as the values of the bytes does so each player has a incentive to raise it and lower their opponent's 
+the bf variation says that [] only exits once a range is reach.
+the sum of your card starts at 50, and the player can assign them freely.
+it will rise as the values of the bytes does so each player has an incentive to raise it and lower their opponent's 
 if a player gets all their bytes to a value of 255 (overflow is not a thing) they will win the game.
 if a player gets all their bytes to a value of 0 (underflow is not a thing) they will lose the game.

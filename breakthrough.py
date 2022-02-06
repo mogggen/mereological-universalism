@@ -1,5 +1,5 @@
 from random import randint, choice
-bfVocabulary = "+-><"#[].,"
+bfVocabulary = "+-><{}!?"
 
 mapSize = 8
 distance = 5  # less than map size
@@ -66,16 +66,16 @@ def bf_interperator(bf_script_with_comments, stepCap=50):
 		if char == "<":
 			actor_pointer -= 1
 		
-		if char == ".":
+		if char == "!":
 			ACTOR_VARIABLE = actorMap[actor_pointer]
 		
-		if char == ",":
+		if char == "?":
 			actorMap[actor_pointer] = ACTOR_VARIABLE
 			
-		if char == "[":
+		if char == "{":
 			scopeStack.append(script_pointer)
 		
-		if char == "]" and bf_script_with_comments[script_pointer]:
+		if char == "}" and bf_script_with_comments[script_pointer]:
 			actor_pointer = scopeStack.pop()
 		script_pointer += 1
 		
@@ -94,9 +94,10 @@ def step_simulation():
 	global generation
 	
 	generation += 1
+	print("0-11: ", end="")
 	# prepare to transition to the next generation of the ActorMap
 	previous_actorMap = actorMap
-	bf_compile(script_slots[previous_actorMap[_]])
+	bf_interperator(bf_compile(script_slots[previous_actorMap[int(input())]]))
 
 
 # play game
@@ -122,6 +123,6 @@ def display_board(num_of_col):
 
 # test run
 while True:
-	input()
-	step_simulation()
-	display_board(num_of_col=8)
+    display_board(num_of_col=8)
+    step_simulation()	
+	
