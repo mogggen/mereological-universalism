@@ -28,14 +28,14 @@ oplowrange = 0
 ophighrange = 31
 
 # a text to code function
-def bf_interperator(plbuf, opbuf, plpointer, oppointer, pllowrange, plhighrange, bf_script, stepCap=50):
+def bf_interperator(plbuf, opbuf, plpointer, oppointer, pllowrange, plhighrange, stepCap=50):
 
 	stepsTaken = 0
 	scopeStack = []
 
     # where in the bf code the main-thread is executing (code line:char)
 	script_pointer = 0
-	rule = plrule[plbuf[plpointer]]
+	rule = bf_compile(plrule[plbuf[plpointer]])
 
 	while (script_pointer < len(rule)):
 
@@ -76,7 +76,7 @@ def bf_interperator(plbuf, opbuf, plpointer, oppointer, pllowrange, plhighrange,
 
 		if stepsTaken >= stepCap:
 			return stepCap
-
+		return stepsTaken
 	# check for Error
 	if scopeStack:
 		raise "Syntax Error: expected '}', got " + rule[script_pointer]
@@ -102,6 +102,20 @@ def start(plbuf, opbuf, plrule, oprule):
 		plrule[rulepick[pick]] = oprule[rulepick[pick]]
 		oprule[rulepick[pick]] = temp
 
-def game(plbuf, opbuf, plpointer, oppointer):
+def turn(plbuf, opbuf, plpointer, oppointer, pllowrange, plhighrange):
 	plstepsremaning = sum(plbuf)
-	bf_interperator(bf_compile(plrule[input()]))
+	bf_interperator(bf_compile(plrule[plbuf[input("pick a rule index: ")]]))
+
+def game(plbuf, opbuf, plpointer, oppointer):
+	turns = 0
+
+	while (True):
+		if turns % 2 == 0:
+			print(plrule)
+			turn(plbuf, opbuf, plpointer, oppointer, pllowrange, plhighrange)
+		else:
+			print(oprule)
+			turn(opbuf, plbuf, oppointer, plpointer, oplowrange, ophighrange)
+		turns += 1
+
+game(plbuf, opbuf, plpointer, oppointer)
