@@ -1,6 +1,7 @@
 from random import randint
 
-
+# global restrictions
+range_step = 32
 bf_vocabulary = "+-><{}!?"
 
 
@@ -17,8 +18,8 @@ def bf_compile(rule):
 pl_buf = []
 op_buf = []
 
-pl_rule = []
-op_rule = []
+pl_rules = []
+op_rules = []
 
 pl_pointer = 0
 op_pointer = 0
@@ -40,7 +41,7 @@ def bf_interperator(picked_rule, pl_buf, op_buf, pl_pointer, op_pointer, pl_low_
 
 	# where in the bf code the main-thread is executing (code line:char)
 	script_pointer = 0
-	rule = bf_compile(pl_rule[load_rule(pl_buf[picked_rule])])
+	rule = bf_compile(pl_rules[load_rule(pl_buf[picked_rule])])
 
 	while (script_pointer < len(rule)):
 
@@ -94,7 +95,7 @@ def bf_interperator(picked_rule, pl_buf, op_buf, pl_pointer, op_pointer, pl_low_
 # flip a coin of who starts
 
 
-def setup_player_buffer(buf):
+def set_player_buffer(buf):
 	remaning = 250
 	for b in range(8):
 		print("byte "+str(b+1)+"/8")
@@ -104,7 +105,7 @@ def setup_player_buffer(buf):
 				break
 			else:
 				stream = input(
-					"assign rule key (" + str(remaning) + " remaning): ")
+					"assign rule key value (" + str(remaning) + " value(s) remaning): ")
 
 			if stream == "":
 				break
@@ -121,7 +122,6 @@ def setup_player_buffer(buf):
 
 def setup_rules_for_ranges(rules):
 	symbols_used = 0
-	range_step = 32
 	print("Vocabulary:", bf_vocabulary)
 	for rule in range(6):
 		stream = input("Write rule for keys in range " + str((rule + 1)
@@ -131,13 +131,22 @@ def setup_rules_for_ranges(rules):
 	#print("symbols_used", symbols_used)
 
 
-def start(pl_buf, op_buf, pl_rule, op_rule):
+# mix 3 random rules between players
+def mix_rules(pl_rules, op_rules):
+	
+	rule_pick = [0, 1, 2, 3, 4, 5]
+	for _ in range(3):
 
-	setup_player_buffer(pl_buf)
-	setup_player_buffer(op_buf)
+		pick = randint(0, len(rule_pick) - 1)
 
-	setup_rules_for_ranges(pl_rule)
-	setup_rules_for_ranges(op_rule)
+		temp = pl_rules[rule_pick[pick]]
+		pl_rules[rule_pick[pick]] = op_rules[rule_pick[pick]]
+		op_rules[rule_pick[pick]] = temp
+
+		rule_pick.pop(pick)
+
+
+def start(pl_buf, op_buf, pl_rules, op_rules):
 
 	if sum(pl_buf) > 50:
 		return
@@ -146,25 +155,15 @@ def start(pl_buf, op_buf, pl_rule, op_rule):
 	if len(pl_buf) != 8 or len(op_buf) != 8:
 		return
 
-	# mix 4 random rules between players
-	rule_pick = [0, 1, 2, 3, 4, 5]
-	for _ in range(3):
-
-		pick = randint(0, len(rule_pick) - 1)
-
-		temp = pl_rule[rule_pick[pick]]
-		pl_rule[rule_pick[pick]] = op_rule[rule_pick[pick]]
-		op_rule[rule_pick[pick]] = temp
-
-		rule_pick.pop(pick)
-
 
 def turn(pl_buf, op_buf, pl_pointer, op_pointer, pl_low_range, pl_high_range):
 	pl_steps_remaining = sum(pl_buf)
 	while pl_steps_remaining > 0:
-		print(pl_buf)
-		pl_steps_remaining -= bf_interperator(int(input("pick a buffer index that matches the rule you want to execute (" + str(pl_steps_remaining) + " steps remaning): ")),
-						pl_buf, op_buf, pl_pointer, op_pointer, pl_low_range, pl_high_range, pl_steps_remaining)
+		stream = input("pick a buffer index that matches the rule you want to execute (" + str(pl_steps_remaining) + " steps remaning): ")
+		if stream == '':
+			print("'Enter' entered, ending turn...")
+			break
+		pl_steps_remaining -= bf_interperator(int(stream), pl_buf, op_buf, pl_pointer, op_pointer, pl_low_range, pl_high_range, pl_steps_remaining)
 
 
 
@@ -174,27 +173,98 @@ def print_player_buffer(buf):
 
 
 def game(pl_buf, op_buf, pl_pointer, op_pointer):
-	start(pl_buf, op_buf, pl_rule, op_rule)
+	start(pl_buf, op_buf, pl_rules, op_rules)
 	turns = 0
 	pl_win = max(op_buf) < 32 and min(pl_buf) > 223
 	op_win = max(pl_buf) < 32 and min(op_buf) > 223
 	while (True):
 		if turns % 2 == 0:
-			print(pl_rule)
+			for rule in range(6):
+				print(str((rule + 1) * range_step) + "-" + str((rule + 2) * range_step - 1) + ": " + str(pl_rules[rule]))
 			turn(pl_buf, op_buf, pl_pointer, op_pointer, pl_low_range, pl_high_range)
 			if (pl_win):
 				print("player win!")
 				break
 		else:
-			print(op_rule)
+			for rule in range(6):
+				print(str((rule + 1) * range_step) + "-" + str((rule + 2) * range_step - 1) + ": " + str(op_rules[rule]))
 			turn(op_buf, pl_buf, op_pointer, pl_pointer, op_low_range, op_high_range)
 			if (op_win):
 				print("opponent win!")
 				break
 		turns += 1
 
+def show_help():
+	print("-h, --help		display this text")
+	print("""--set_rules	each player sets 6\n
+					\t\t\t\trules between key\n
+					\t\t\t\tvalues of 32-223""")
+	print("--set_buffer")
 
 if __name__ == "__main__":
+	while True:
+		
+		# main prompt
+		stream = input('> ')
+	
+		# help prompt
+		if stream in ("-h", "--help"):
+			show_help()
+		
+		# set rules prompt
+		if stream == "--set_rules":
 
+			print("0: pl_rules:", "set" if len(pl_rules) else "not set")
+			print("1: op_rules:", "set" if len(op_rules) else "not set")
+			print("2: back")
+
+			stream = input("which player (0-2): ")
+			
+			if stream == "0":
+				setup_rules_for_ranges(pl_rules)
+			elif stream == "1":
+				setup_rules_for_ranges(op_rules)
+			else:
+				continue
+		
+		# set buffer values prompt
+		if stream == "--set_player_buffer":
+
+			print("0: pl_buffer:", "set" if len(pl_buf) == 8 else "not set")
+			print("1: op_buffer:", "set" if len(pl_buf) == 8 else "not set")
+			print("2: back")
+
+			stream = input("which player(0-2): ")
+
+			if stream == "0":
+				set_player_buffer(pl_buf)
+			if stream == "1":
+				set_player_buffer(op_buf)
+			else:
+				continue
+
+
+		# start game prompt
+		if stream in ("-s", "--start"):
+			
+			print("0: pl")
+			print("1: op")
+			print("2: back")
+			
+			stream = input("which player goes first: (0-2): ")
+			
+			if stream == "0":
+				game(pl_buf, op_buf, pl_pointer, op_pointer)
+			elif stream == "1":
+				game(op_buf, pl_buf, op_pointer, pl_pointer)
+			else:
+				continue
+		
+		if stream in ("-q", "--quit"):
+			break
+
+		# exception prompt	
+		else:
+			print("-h or --help for help")
+		
 	# the start of the game
-	game(pl_buf, op_buf, pl_pointer, op_pointer)
