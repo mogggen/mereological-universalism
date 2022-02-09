@@ -31,19 +31,42 @@ pl_high_range = 31
 op_low_range = 0
 op_high_range = 31
 
-def load_rule(the_range_of_the_byte_value):
+
+# load content from file
+def load_from_file(filename, arr, is_integer_array=False):
+	arr.clear()
+	f = open(filename, 'r')
+	lines = f.readlines()
+	for line in range(len(lines)):
+		if line < len(lines) - 1:
+			if is_integer_array:
+				arr.append(int(lines[line][:-1]))
+			else:
+				arr.append(lines[line][:-1])
+		else:
+			if is_integer_array:
+				arr.append(int(lines[line]))
+			else:
+				arr.append(lines[line])
+
+
+def get_rule_range(the_range_of_the_byte_value):
 	return the_range_of_the_byte_value >> 5
 
 
 # a text to code function
-def bf_interperator(picked_rule, pl_buf, op_buf, pl_pointer, op_pointer, pl_low_range, pl_high_range, step_cap):
+def bf_interperator(picked_index, pl_buf, op_buf, pl_pointer, op_pointer, pl_low_range, pl_high_range, step_cap):
 
 	steps_taken = 0
 	scope_stack = []
 
 	# where in the bf code the main-thread is executing (code line:char)
 	script_pointer = 0
-	rule = bf_compile(pl_rules[load_rule(pl_buf[picked_rule])])
+	if 0 <= get_rule_range(pl_buf[picked_index]) - 1 <= 5:
+		rule = bf_compile(pl_rules[get_rule_range(pl_buf[picked_index]) - 1])
+	else:
+		print("invalid rule range of", pl_buf[picked_index])
+		return 0
 
 	while (script_pointer < len(rule)):
 
@@ -156,9 +179,18 @@ def mix_rules(pl_rules, op_rules):
 
 def ready(pl_buf, op_buf, pl_rules, op_rules):
 
+	pl_buf_sum = 0
+	op_buf_sum = 0
+
+	for p in pl_buf:
+		pl_buf_sum += int(p)
+	
+	for o in op_buf:
+		op_buf_sum += int(o)
+
 	return\
-	sum(pl_buf) == STARTING_SUM and\
-	sum(op_buf) == STARTING_SUM and\
+	pl_buf_sum == STARTING_SUM and\
+	op_buf_sum == STARTING_SUM and\
 	len(pl_rules) == 6 and\
 	len(op_rules) == 6
 
@@ -166,6 +198,7 @@ def ready(pl_buf, op_buf, pl_rules, op_rules):
 def print_player_buffer(buf):
 	for s in buf:
 		print(s, end="\t")
+	print()
 
 
 def turn(pl_buf, op_buf, pl_pointer, op_pointer, pl_low_range, pl_high_range):
@@ -173,9 +206,11 @@ def turn(pl_buf, op_buf, pl_pointer, op_pointer, pl_low_range, pl_high_range):
 	pl_steps_remaining = sum(pl_buf)
 	
 	while pl_steps_remaining > 0:
-
+		
+		print("\t" * op_pointer + "|")
 		print_player_buffer(op_buf)
 		print()
+		print("\t" * pl_pointer + "|")
 		print_player_buffer(pl_buf)
 		print()
 		
@@ -198,6 +233,7 @@ def game(pl_buf, op_buf, pl_pointer, op_pointer):
 	
 	while (True):
 		if turns % 2 == 0:
+
 			# prints available rules
 			for rule in range(6):
 				print(str((rule + 1) * range_step) + "-" + str((rule + 2) * range_step - 1) + ": " + str(pl_rules[rule]))
@@ -208,6 +244,7 @@ def game(pl_buf, op_buf, pl_pointer, op_pointer):
 				print("player win!")
 				break
 		else:
+
 			# prints available rules
 			for rule in range(6):
 				print(str((rule + 1) * range_step) + "-" + str((rule + 2) * range_step - 1) + ": " + str(op_rules[rule]))
@@ -230,7 +267,8 @@ def show_help():
 		distributes 50
 		key values among
 		8 bytes within
-		their buffer."""
+		their buffer.
+-s, --start	start the game."""
 	)
 
 if __name__ == "__main__":
@@ -286,9 +324,23 @@ if __name__ == "__main__":
 			stream = input("which player goes first: (0-2): ")
 			
 			if stream == "0":
+
+				load_from_file("pl_buf.txt", pl_buf, True)
+				load_from_file("op_buf.txt", op_buf, True)
+				load_from_file("pl_rules.bf", pl_rules, False)
+				load_from_file("op_rules.bf", op_rules, False)
+
 				game(pl_buf, op_buf, pl_pointer, op_pointer)
+				
 			elif stream == "1":
+
+				load_from_file("pl_buf.txt", pl_buf, True)
+				load_from_file("op_buf.txt", op_buf, True)
+				load_from_file("pl_rules.bf", pl_rules, False)
+				load_from_file("op_rules.bf", op_rules, False)
+
 				game(op_buf, pl_buf, op_pointer, pl_pointer)
+
 			else:
 				continue
 		
