@@ -15,6 +15,8 @@ def bf_compile(rule):
 
 
 # assign 50 steps to your buffer
+STARTING_SUM = 250
+
 pl_buf = []
 op_buf = []
 
@@ -101,7 +103,7 @@ def bf_interperator(picked_rule, pl_buf, op_buf, pl_pointer, op_pointer, pl_low_
 
 def set_player_buffer(buf):
 	buf.clear()
-	remaning = 250
+	remaning = STARTING_SUM
 	for b in range(8):
 		print("byte "+str(b+1)+"/8")
 		while True:
@@ -155,8 +157,8 @@ def mix_rules(pl_rules, op_rules):
 def ready(pl_buf, op_buf, pl_rules, op_rules):
 
 	return\
-	len(pl_buf) == 8 and\
-	len(op_buf) == 8 and\
+	sum(pl_buf) == STARTING_SUM and\
+	sum(op_buf) == STARTING_SUM and\
 	len(pl_rules) == 6 and\
 	len(op_rules) == 6
 
@@ -260,8 +262,8 @@ if __name__ == "__main__":
 		# set buffer values prompt
 		elif stream == "--set_buffer":
 
-			print("0: pl_buffer:", "set" if len(pl_buf) == 8 else "not set")
-			print("1: op_buffer:", "set" if len(op_buf) == 8 else "not set")
+			print("0: pl_buffer:", "set" if sum(pl_buf) == STARTING_SUM else "not set")
+			print("1: op_buffer:", "set" if sum(op_buf) == STARTING_SUM else "not set")
 			print("2: back")
 
 			stream = input("which player(0-2): ")
