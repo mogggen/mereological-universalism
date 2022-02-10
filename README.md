@@ -6,7 +6,10 @@ Idelogy: merological-universalism (yes I have near to no knowledge of the meanin
 * '-' - decrement Value at carret
 * '<' - reverse address pointer
 * '>' - traverse address pointer
+### Standard
 * '\{' - beginning of scope, check if carret value is non-zero, otherwise go past end of scope to the preceding instruction
+### Beginner
+* '\{' - beginning of scope, always enter scope, but exit the scope when it's at a new range
 * '}' - end of scope, return to beginning of newest scope
 
 ## Deviations
