@@ -65,6 +65,7 @@ Idelogy: merological-universalism (yes I have near to no knowledge of the meanin
 
 ### Beginner
 1. Each player pick what values will represent what rules (between 0-255)
+(And what 4 bytes will be swapped with four arbitrary values instead of the summation rule)
 2. Player swap half their states at random, and place their state in the corresponding range
 3. The values of the bytes at the beginning is assigned and is capped at 50 for the sum of the values om the buffer
 
